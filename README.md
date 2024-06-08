@@ -9,6 +9,9 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+## Dev To Do
+- continue [guide](https://hexdocs.pm/phoenix/request_lifecycle.html#another-new-action) with [web apis](https://hexdocs.pm/phoenix/json_and_apis.html)
+
 ## Learn more
 
   * Official website: https://www.phoenixframework.org/
