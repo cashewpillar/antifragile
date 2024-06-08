@@ -2,10 +2,10 @@ import Config
 
 # Configure your database
 config :notes, Notes.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "cashewpillar",
+  password: "cashewpillar",
   hostname: "localhost",
-  database: "notes_dev",
+  database: "notes",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
