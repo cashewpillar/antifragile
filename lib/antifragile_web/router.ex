@@ -7,6 +7,7 @@ defmodule AntifragileWeb.Router do
 
   scope "/api", AntifragileWeb do
     pipe_through :api
+    resources "/notes", NoteController, except: [:new, :edit]
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
