@@ -24,8 +24,6 @@ defmodule AntifragileWeb.NoteJSON do
       tags: note.tags,
       reminder: note.reminder,
       user_id: note.user_id,
-      created_at: note.created_at,
-      modified_at: note.modified_at
     }
   end
 end
