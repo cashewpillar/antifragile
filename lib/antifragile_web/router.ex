@@ -1,14 +1,29 @@
 defmodule AntifragileWeb.Router do
   use AntifragileWeb, :router
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, html: {AntifragileWeb.Layouts, :root}
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/api", AntifragileWeb do
-    pipe_through :api
-    resources "/notes", NoteController, except: [:new, :edit]
+  scope "/", AntifragileWeb do
+    pipe_through :browser
+
+    get "/", PageController, :home
   end
+
+  # Other scopes may use custom stacks.
+  # scope "/api", AntifragileWeb do
+  #   pipe_through :api
+  # end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:antifragile, :dev_routes) do
@@ -20,7 +35,7 @@ defmodule AntifragileWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
-      pipe_through [:fetch_session, :protect_from_forgery]
+      pipe_through :browser
 
       live_dashboard "/dashboard", metrics: AntifragileWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview

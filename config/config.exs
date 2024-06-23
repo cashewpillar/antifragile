@@ -9,18 +9,18 @@ import Config
 
 config :antifragile,
   ecto_repos: [Antifragile.Repo],
-  generators: [timestamp_type: :utc_datetime, binary_id: true]
+  generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
 config :antifragile, AntifragileWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [json: AntifragileWeb.ErrorJSON],
+    formats: [html: AntifragileWeb.ErrorHTML, json: AntifragileWeb.ErrorJSON],
     layout: false
   ],
   pubsub_server: Antifragile.PubSub,
-  live_view: [signing_salt: "gFGTaW5C"]
+  live_view: [signing_salt: "hagq4WL9"]
 
 # Configures the mailer
 #
@@ -30,6 +30,28 @@ config :antifragile, AntifragileWeb.Endpoint,
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
 config :antifragile, Antifragile.Mailer, adapter: Swoosh.Adapters.Local
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.17.11",
+  antifragile: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure tailwind (the version is required)
+config :tailwind,
+  version: "3.4.0",
+  antifragile: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,

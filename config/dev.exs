@@ -23,8 +23,11 @@ config :antifragile, AntifragileWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "tY40LZoMnPEOonVCpEU18l7i+KR6Bda+F0912VzSmMbH7V9t2dq8GBABL0QNE5jM",
-  watchers: []
+  secret_key_base: "tjhVRKmcAEMFjWbm99/ijIYlW5+ymBYRCxK5FswzQ2U88l5vAZHD+BsBIrviUSjq",
+  watchers: [
+    esbuild: {Esbuild, :install_and_run, [:antifragile, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:antifragile, ~w(--watch)]}
+  ]
 
 # ## SSL Support
 #
@@ -49,6 +52,16 @@ config :antifragile, AntifragileWeb.Endpoint,
 # configured to run both http and https servers on
 # different ports.
 
+# Watch static and templates for browser reloading.
+config :antifragile, AntifragileWeb.Endpoint,
+  live_reload: [
+    patterns: [
+      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/gettext/.*(po)$",
+      ~r"lib/antifragile_web/(controllers|live|components)/.*(ex|heex)$"
+    ]
+  ]
+
 # Enable dev routes for dashboard and mailbox
 config :antifragile, dev_routes: true
 
@@ -61,6 +74,12 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :phoenix_live_view,
+  # Include HEEx debug annotations as HTML comments in rendered markup
+  debug_heex_annotations: true,
+  # Enable helpful, but potentially expensive runtime checks
+  enable_expensive_runtime_checks: true
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false

@@ -17,7 +17,7 @@ config :antifragile, Antifragile.Repo,
 # you can enable the server option below.
 config :antifragile, AntifragileWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "85P4qzAuXh/X96PkxlID7C5YXxqmkiT2UgXrs/HCtJtee8w3ytzMvejBKJ1uliyx",
+  secret_key_base: "WX7ma5qZ4wCNpiFpXgp2Gi19LtEwcWwtcZTsdvDuVm7N4iIl49xcA7j2YP8U4RR3",
   server: false
 
 # In test we don't send emails.
